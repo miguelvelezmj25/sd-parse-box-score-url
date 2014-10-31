@@ -96,6 +96,14 @@ public class URLParser {
 		// Return
 		return teams;
 	}
+	
+	public ArrayList<String> parseStatHeader(String website) {
+		ArrayList<String> headers = new ArrayList<String>();
+		
+		
+		
+		return headers;
+	}
 
 	// Getters
 	public String getUrl() { return this.url; }
