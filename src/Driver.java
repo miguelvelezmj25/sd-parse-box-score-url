@@ -14,8 +14,13 @@ public class Driver {
 		String website = urlParser.doGet();
 		// Get the teams
 		String[] teams = urlParser.parseTeams(website);
+		System.out.println("Teams: " + teams[0] + " - " + teams[1]);
 		// Get stats headers
-		ArrayList<String> headers = urlParser.parseStatHeader(website, teams[0], teams[1]);
+		ArrayList<String> headers = urlParser.parseStatHeader(website, teams[0]);
+		
+		for(int i = 0; i < headers.size(); i++) {
+			System.out.println(headers.get(i));
+		}
 		
 		TreeMap<String, String> statistics = new TreeMap<String, String>();
 		TreeMap<String, TreeMap<String, String>> players = new TreeMap<String, TreeMap<String,String>>();

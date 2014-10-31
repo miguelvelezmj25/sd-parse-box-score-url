@@ -98,25 +98,38 @@ public class URLParser {
 		return teams;
 	}
 	
-	public ArrayList<String> parseStatHeader(String website, String team1, String team2) {
+	/** Returns an arrayList with the statistic headers
+	 */
+	public ArrayList<String> parseStatHeader(String website, String team) {
 		ArrayList<String> headers = new ArrayList<String>();
-		String startTeam1 = "</div>" + team1;
-		String startTeam2 = "</div>" + team2;
-		String startHeaders = ">Player</th>";
+		String startTeam = "</div>" + team;
 		String endHeaders = "</thead>";
+		String endHeader = "</th>";
 		String startHeader = "<th align=\"right\" width=\"4%\">";
+		// Getting the length of the startHeader
+		int startHeaderLength = startHeader.length();
+		// More generic version of startHeader
+		startHeader = "<th align=\"right\"";
 		
-		// Index where team1 headers start
-		int team1StartIndex = website.indexOf(startTeam1);
+		// Index where team headers start
+		int teamStartIndex = website.indexOf(startTeam);
+		// Getting the string starting at the headers start
+		String teamHeadersStart = website.substring(teamStartIndex);
+		// Index where the headers end
+		int teamFinishIndex = teamHeadersStart.indexOf(endHeaders);
+		// String with only the headers
+		StringBuilder teamHeaders = new StringBuilder(teamHeadersStart.substring(0, teamFinishIndex));
 				
-		// Get the title from the website
-		String team1HeadersStart = website.substring(team1StartIndex);
-
-		int team1FinishIndex = team1HeadersStart.indexOf(endHeaders);
-		StringBuilder team1Headers = new StringBuilder(team1HeadersStart.substring(0, team1FinishIndex));
-		System.out.println(team1Headers);
+		// Loop through the string of headers adding and modifying the string
+		int headerIndex = teamHeaders.indexOf(startHeader);
 		
+		while(headerIndex >=0) {
+			teamHeaders = new StringBuilder(teamHeaders.substring(headerIndex + startHeaderLength));
+			headers.add(teamHeaders.substring(0,teamHeaders.indexOf(endHeader)).trim());
+			headerIndex = teamHeaders.indexOf(startHeader);
+		}
 		
+		// Return headers
 		return headers;
 	}
 
