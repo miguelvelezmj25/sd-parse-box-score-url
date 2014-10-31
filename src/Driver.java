@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class Driver {
@@ -13,6 +14,8 @@ public class Driver {
 		String website = urlParser.doGet();
 		// Get the teams
 		String[] teams = urlParser.parseTeams(website);
+		// Get stats headers
+		ArrayList<String> headers = urlParser.parseStatHeader(website, teams[0], teams[1]);
 		
 		TreeMap<String, String> statistics = new TreeMap<String, String>();
 		TreeMap<String, TreeMap<String, String>> players = new TreeMap<String, TreeMap<String,String>>();

@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * @author Miguel Velez
@@ -78,11 +79,11 @@ public class URLParser {
 		String teamLocationFinish = "</title>";
 		
 		// Index where teams begin and end
-		int teamtartIndex = website.indexOf(teamLocationStart);
+		int teamStartIndex = website.indexOf(teamLocationStart);
 		int teamFinishIndex = website.indexOf(teamLocationFinish);
 		
 		// Get the title from the website
-		StringBuilder title = new StringBuilder(website.substring(teamtartIndex + teamLocationStart.length(),
+		StringBuilder title = new StringBuilder(website.substring(teamStartIndex + teamLocationStart.length(),
 				teamFinishIndex));
 			
 		// Index where the first and second team end
@@ -95,6 +96,29 @@ public class URLParser {
 		
 		// Return
 		return teams;
+	}
+	
+	public ArrayList<String> parseStatHeader(String website, String team1, String team2) {
+		ArrayList<String> headers = new ArrayList<String>();
+		String startTeam1 = "</div>" + team1;
+		String startTeam2 = "</div>" + team2;
+		String startHeaders = ">Player</th>";
+		String endHeaders = "</thead>";
+		String startHeader = "<th align=\"right\" width=\"4%\">";
+		
+		// Index where team1 headers start
+		int team1StartIndex = website.indexOf(startTeam1);
+				
+		// Get the title from the website
+		String team1HeadersStart = website.substring(team1StartIndex);
+
+		int team1FinishIndex = team1HeadersStart.indexOf(endHeaders);
+		StringBuilder team1Headers = new StringBuilder(team1HeadersStart.substring(0, team1FinishIndex));
+		System.out.println(team1Headers);
+		
+		
+		
+		return headers;
 	}
 
 	// Getters
