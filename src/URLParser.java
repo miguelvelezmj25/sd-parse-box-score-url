@@ -117,7 +117,6 @@ public class URLParser {
 		System.out.println(team1Headers);
 		
 		
-		
 		return headers;
 	}
 
