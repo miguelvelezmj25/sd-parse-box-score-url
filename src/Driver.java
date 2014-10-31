@@ -21,22 +21,23 @@ public class Driver {
 
 		TreeMap<String, TreeMap<String, TreeMap<String, String>>> teamsStats = new TreeMap<String, TreeMap<String, TreeMap<String, String>>>();
 		
+		// Putting the team statis in the TreeMap
 		for(int i = 0; i < teams.length; i++) {					
 			teamsStats.put(teams[i], urlParser.parsePlayers(website, teams[i], headers));
 		}
-			
-			for(Entry<String, TreeMap<String, TreeMap<String, String>>> team: teamsStats.entrySet()) {
-				System.out.println("Team: " + team.getKey());
-				
-				TreeMap<String, TreeMap<String, String>> players = team.getValue();
-				
-				for(Entry<String, TreeMap<String, String>> player: players.entrySet()) {
-					System.out.println("\t" + player.getKey() + " - " + player.getValue());
-			}
 		
+		// Displaying stats
+		for(Entry<String, TreeMap<String, TreeMap<String, String>>> team: teamsStats.entrySet()) {
+			System.out.println("Team: " + team.getKey());
 			
+			// Get the players from each team
+			TreeMap<String, TreeMap<String, String>> players = team.getValue();
 			
-			
+			// Display the players stats
+			for(Entry<String, TreeMap<String, String>> player: players.entrySet()) {
+				System.out.println("\t" + player.getKey() + " - " + player.getValue());
+			}
+
 		}
 			  
 	}

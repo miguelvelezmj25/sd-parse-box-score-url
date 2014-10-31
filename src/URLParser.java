@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 /**
  * @author Miguel Velez
- * @version 0.1
+ * @version 1.0
  * 
  * Parses a URL
  */
@@ -134,6 +134,9 @@ public class URLParser {
 		return headers;
 	}
 	
+	/** Returns a treeMap with a players and its statistics in another 
+	 * treeMap
+	 */
 	public TreeMap<String, TreeMap<String, String>> parsePlayers(String website, String team, ArrayList<String> statHeaders) {
 		TreeMap<String, TreeMap<String, String>> players = new TreeMap<String, TreeMap<String,String>>();
 				
@@ -150,48 +153,46 @@ public class URLParser {
 		
 		// Getting the string starting at the headers start
 		StringBuilder teamPlayerStart = new StringBuilder(teamStart.substring(teamPlayertIndex));
+		// End of all the players of the current team
 		int teamPlayerEnd = teamPlayerStart.indexOf(endPlayers);
 		teamPlayerStart = new StringBuilder(teamPlayerStart.substring(0, teamPlayerEnd));
-//		System.out.println(teamPlayerStart.toString());
 		
 		String startPlayer = ">";
 		String endPlayer = "</a>";
 		String startStat = "<td align=\"right\">";
 		String endStat = "</td>";
 		
-		
+		// Where the players start
 		int startStats = teamPlayerStart.indexOf(startPlayer);
 		
-		
+		 // Loop through all the players and add its stats
 		while(startStats >=0) {
+			// Create a new treeMap for each player
 			TreeMap<String, String> statistics = new TreeMap<String, String>();
-			
+			// Get the player
 			String player = teamPlayerStart.substring(startStats + startPlayer.length(), teamPlayerStart.indexOf(endPlayer));
-//			System.out.println(player);
-			
+
+			// Add all the stats for the player
 			for(int i = 0; i < statHeaders.size(); i++) {
+				// Modifying the string
 				teamPlayerStart = new StringBuilder(teamPlayerStart.substring(teamPlayerStart.indexOf(startStat) + startStat.length()));
-//				System.out.println(teamPlayerStart);
+				// Get a specific stat
 				statistics.put(statHeaders.get(i), teamPlayerStart.substring(0, teamPlayerStart.indexOf(endStat)));
-//				System.out.println(statistics.get(statHeaders.get(i)));
+				// Finding the start of the stats of the next player
 				startStats = teamPlayerStart.indexOf(startStat);
 				
 			}
 			
+			// Add the player with their stats to the return treeMap
 			players.put(player, statistics);
 			
+			//  Continue if there are more players
 			if(teamPlayerStart.indexOf(startPlayers) >= 0) {
 				teamPlayerStart = new StringBuilder(teamPlayerStart.substring(teamPlayerStart.indexOf(startPlayers)));
-//			System.out.println(teamPlayerStart);
-				startStats = teamPlayerStart.indexOf(startPlayer);
-				
+				startStats = teamPlayerStart.indexOf(startPlayer);		
 			}			
 		}
-		
-		
-		
-		
-		
+				
 		return players;		
 	}
 
