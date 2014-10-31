@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * @author Miguel Velez
@@ -131,6 +132,67 @@ public class URLParser {
 		
 		// Return headers
 		return headers;
+	}
+	
+	public TreeMap<String, TreeMap<String, String>> parsePlayers(String website, String team, ArrayList<String> statHeaders) {
+		TreeMap<String, TreeMap<String, String>> players = new TreeMap<String, TreeMap<String,String>>();
+				
+		String startTeam = "</div>" + team;
+		String startPlayers = "<a href=\"http://espn.go.com/nhl/player/";
+		String endPlayers = ">Player</th";
+		
+		// Index where team headers start
+		int teamStartIndex = website.indexOf(startTeam);
+		// Getting the string starting at the team start
+		String teamStart = website.substring(teamStartIndex);
+		// Index where players start
+		int teamPlayertIndex = teamStart.indexOf(startPlayers);
+		
+		// Getting the string starting at the headers start
+		StringBuilder teamPlayerStart = new StringBuilder(teamStart.substring(teamPlayertIndex));
+		int teamPlayerEnd = teamPlayerStart.indexOf(endPlayers);
+		teamPlayerStart = new StringBuilder(teamPlayerStart.substring(0, teamPlayerEnd));
+//		System.out.println(teamPlayerStart.toString());
+		
+		String startPlayer = ">";
+		String endPlayer = "</a>";
+		String startStat = "<td align=\"right\">";
+		String endStat = "</td>";
+		
+		
+		int startStats = teamPlayerStart.indexOf(startPlayer);
+		
+		
+		while(startStats >=0) {
+			TreeMap<String, String> statistics = new TreeMap<String, String>();
+			
+			String player = teamPlayerStart.substring(startStats + startPlayer.length(), teamPlayerStart.indexOf(endPlayer));
+//			System.out.println(player);
+			
+			for(int i = 0; i < statHeaders.size(); i++) {
+				teamPlayerStart = new StringBuilder(teamPlayerStart.substring(teamPlayerStart.indexOf(startStat) + startStat.length()));
+//				System.out.println(teamPlayerStart);
+				statistics.put(statHeaders.get(i), teamPlayerStart.substring(0, teamPlayerStart.indexOf(endStat)));
+//				System.out.println(statistics.get(statHeaders.get(i)));
+				startStats = teamPlayerStart.indexOf(startStat);
+				
+			}
+			
+			players.put(player, statistics);
+			
+			if(teamPlayerStart.indexOf(startPlayers) >= 0) {
+				teamPlayerStart = new StringBuilder(teamPlayerStart.substring(teamPlayerStart.indexOf(startPlayers)));
+//			System.out.println(teamPlayerStart);
+				startStats = teamPlayerStart.indexOf(startPlayer);
+				
+			}			
+		}
+		
+		
+		
+		
+		
+		return players;		
 	}
 
 	// Getters

@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class Driver {
@@ -17,18 +18,27 @@ public class Driver {
 		System.out.println("Teams: " + teams[0] + " - " + teams[1]);
 		// Get stats headers
 		ArrayList<String> headers = urlParser.parseStatHeader(website, teams[0]);
-		
-		for(int i = 0; i < headers.size(); i++) {
-			System.out.println(headers.get(i));
-		}
-		
-		TreeMap<String, String> statistics = new TreeMap<String, String>();
-		TreeMap<String, TreeMap<String, String>> players = new TreeMap<String, TreeMap<String,String>>();
+
 		TreeMap<String, TreeMap<String, TreeMap<String, String>>> teamsStats = new TreeMap<String, TreeMap<String, TreeMap<String, String>>>();
 		
+		for(int i = 0; i < teams.length; i++) {					
+			teamsStats.put(teams[i], urlParser.parsePlayers(website, teams[i], headers));
+		}
+			
+			for(Entry<String, TreeMap<String, TreeMap<String, String>>> team: teamsStats.entrySet()) {
+				System.out.println("Team: " + team.getKey());
+				
+				TreeMap<String, TreeMap<String, String>> players = team.getValue();
+				
+				for(Entry<String, TreeMap<String, String>> player: players.entrySet()) {
+					System.out.println("\t" + player.getKey() + " - " + player.getValue());
+			}
 		
-		
-		  
+			
+			
+			
+		}
+			  
 	}
 
 }
