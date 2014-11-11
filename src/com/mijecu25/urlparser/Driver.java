@@ -1,4 +1,5 @@
 package com.mijecu25.urlparser;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
