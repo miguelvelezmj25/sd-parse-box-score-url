@@ -1,7 +1,7 @@
 sd-parse-box-score-url
 ===================
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mijecu25/dsa/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/miguelvelezmj25/sd-parse-box-score-url/master/LICENSE)
 
 This project parses the statistics of a box score from the ESPN website. Given a URL, it sends a resquest and the responses is parsed. The teams' and player' statistics are then place into TreeMaps.
 
