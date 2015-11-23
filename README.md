@@ -7,7 +7,7 @@ This project parses the statistics of a box score from the ESPN website. Given a
 
 This project was a test from [Sports Data, LLC](http://www.sportsdatallc.com/).
 
-===================
+## License
 
 The MIT License (MIT)
 
